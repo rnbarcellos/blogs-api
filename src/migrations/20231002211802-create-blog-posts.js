@@ -7,35 +7,41 @@ module.exports = {
    * @param {import('sequelize')} Sequelize 
    */
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('blog_posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type : Sequelize.INTEGER
       },
-      displayName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        field: 'display_name'
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        unique: true
-      },
-      password: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      image: {
+      content: {
         type: Sequelize.STRING,
-        allowNull : true
+        allowNull: false
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        field: 'user_id',
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
+      },
+      published: {
+        type: Sequelize.DATE,
+      },
+      updated: {
+        type: Sequelize.DATE,
       },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('blog_posts');
   }
 };
