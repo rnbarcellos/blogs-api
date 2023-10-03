@@ -1,4 +1,6 @@
 const express = require('express');
+const { userController } = require('./controller');
+const loginMiddleware = require('./middlewares/login.middleware');
 
 // ...
 
@@ -10,6 +12,7 @@ app.get('/', (_request, response) => {
 });
 
 app.use(express.json());
+app.post('/login', loginMiddleware, userController.login);
 
 // ...
 
