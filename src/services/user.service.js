@@ -32,7 +32,14 @@ const create = async (displayName, email, password, image) => {
   return { status: httpStatusCode.CREATED, data: { token } };
 };
 
+const getAll = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+
+  return { status: httpStatusCode.OK, data: users };
+};
+
 module.exports = {
   login,
   create,
+  getAll,
 };
