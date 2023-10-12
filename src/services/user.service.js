@@ -2,10 +2,9 @@ const { User } = require('../models');
 const { createToken } = require('../auth/jwt');
 const httpStatusCode = require('../utils/httpStatusCode');
 
-const invalidFields = { status: httpStatusCode.BAD_REQUEST, data: { message: 'Invalid fields' } };
-
 const login = async (email, password) => {
   const user = await User.findOne({ where: { email } });
+  const invalidFields = { status: httpStatusCode.BAD_REQUEST, data: { message: 'Invalid fields' } };
 
   if (!user) return invalidFields;
   if (user.password !== password) return invalidFields;
@@ -38,8 +37,22 @@ const getAll = async () => {
   return { status: httpStatusCode.OK, data: users };
 };
 
+const getById = async (id) => {
+  const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
+
+  if (!user) {
+    return {
+      status: httpStatusCode.NOT_FOUND,
+      data: { message: 'User does not exist' },
+    };
+  }
+
+  return { status: httpStatusCode.OK, data: user };
+};
+
 module.exports = {
   login,
   create,
   getAll,
+  getById,
 };
