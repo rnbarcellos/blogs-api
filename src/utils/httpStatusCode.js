@@ -6,6 +6,7 @@ const httpStatusCode = {
   BAD_REQUEST: 400,
   NO_CONTENT: 204,
   CONFLICT: 409,
+  UNAUTHORIZED: 401,
 };
 
 module.exports = httpStatusCode;
