@@ -8,6 +8,13 @@ const create = async (name) => {
   return { status: httpStatusCode.CREATED, data: category };
 };
 
+const getAll = async () => {
+  const categories = await Category.findAll();
+
+  return { status: httpStatusCode.OK, data: categories };
+};
+
 module.exports = {
   create,
+  getAll,
 };
