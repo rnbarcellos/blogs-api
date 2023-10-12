@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const NO_SECRET = new Date().getTime().toString().slice(0, -4);
-const JWT_SECRET = process.env.JWT_SECRET || NO_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'jwtdev';
 
 const jwtConfig = {
   expiresIn: '10m',

@@ -15,6 +15,24 @@ const login = async (email, password) => {
   return { status: httpStatusCode.OK, data: { token } };
 };
 
+const create = async (displayName, email, password, image) => {
+  const userExists = await User.findOne({ where: { email } });
+
+  if (userExists) {
+    return {
+      status: httpStatusCode.CONFLICT,
+      data: { message: 'User already registered' },
+    };
+  }
+  
+  await User.create({ displayName, email, password, image });
+
+  const token = createToken({ email });
+
+  return { status: httpStatusCode.CREATED, data: { token } };
+};
+
 module.exports = {
   login,
+  create,
 };

@@ -5,6 +5,7 @@ const httpStatusCode = {
   UNPROCESSABLE_ENTITY: 422,
   BAD_REQUEST: 400,
   NO_CONTENT: 204,
+  CONFLICT: 409,
 };
 
 module.exports = httpStatusCode;
