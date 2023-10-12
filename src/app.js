@@ -1,7 +1,7 @@
 const express = require('express');
 const { userController } = require('./controller');
 const loginMiddleware = require('./middlewares/login.middleware');
-const { userRouter } = require('./routes');
+const { userRouter, categoryRouter } = require('./routes');
 
 // ...
 
@@ -14,6 +14,8 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 app.use('/user', userRouter);
+app.use('/categories', categoryRouter);
+
 app.post('/login', loginMiddleware, userController.login);
 
 // ...
