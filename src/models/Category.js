@@ -15,8 +15,5 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     underscored: true,
   });
-  CategoryModel.associate = function(models) {
-    // associations can be defined here
-  };
   return CategoryModel;
 };
