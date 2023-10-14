@@ -50,9 +50,25 @@ const getById = async (id) => {
   return { status: httpStatusCode.OK, data: user };
 };
 
+const deleteById = async (email) => {
+  const user = await User.findOne({ where: { email } });
+
+  if (!user) {
+    return {
+      status: httpStatusCode.NOT_FOUND,
+      data: { message: 'User does not exist' },
+    };
+  }
+
+  await User.destroy({ where: { email } });
+
+  return { status: httpStatusCode.NO_CONTENT };
+};
+
 module.exports = {
   login,
   create,
   getAll,
   getById,
+  deleteById,
 };
