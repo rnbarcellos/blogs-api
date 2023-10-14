@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const httpStatusCode = require('../utils/httpStatusCode');
 
@@ -89,10 +90,33 @@ const remove = async (id, email) => {
   return { status: httpStatusCode.NO_CONTENT, data: {} };
 };
 
+const search = async (q) => {
+  const posts = await BlogPost.findAll({
+    include: [{
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    }, {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    }],
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${q}%` } },
+        { content: { [Op.like]: `%${q}%` } },
+      ],
+    },
+  });
+
+  return { status: httpStatusCode.OK, data: posts };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  search,
 };

@@ -6,6 +6,7 @@ const verifyToken = require('../middlewares/verifyToken.middleware');
 
 const router = Router();
 
+router.get('/search', verifyToken, postController.search);
 router.post('/', verifyToken, newPost, postController.create);
 router.get('/', verifyToken, postController.getAll);
 router.get('/:id', verifyToken, postController.getById);

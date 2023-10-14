@@ -38,10 +38,18 @@ const remove = async (req, res) => {
   res.status(status).json(data);
 };
 
+const search = async (req, res) => {
+  const { q } = req.query;
+  const { status, data } = await postService.search(q);
+
+  res.status(status).json(data);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  search,
 };
