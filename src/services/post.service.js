@@ -57,8 +57,27 @@ const getById = async (id) => {
   return { status: httpStatusCode.OK, data: post };
 };
 
+const update = async (id, title, content, email) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) return { status: httpStatusCode.NOT_FOUND, data: { message: 'Post does not exist' } };
+
+  const user = await User.findOne({ where: { email } });
+  if (post.userId !== user.id) {
+    return { status: httpStatusCode.UNAUTHORIZED, data: { message: 'Unauthorized user' } };
+  }
+
+  await BlogPost.update(
+    { title, content, updated: new Date() },
+    { where: { id } },
+  );
+  const updatedPost = await getById(id);
+
+  return { status: httpStatusCode.OK, data: updatedPost.data };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
