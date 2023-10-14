@@ -30,9 +30,18 @@ const update = async (req, res) => {
   res.status(status).json(data);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { email } = req.user;
+  const { status, data } = await postService.remove(id, email);
+
+  res.status(status).json(data);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };
