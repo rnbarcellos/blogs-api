@@ -24,6 +24,22 @@ const create = async (title, content, categoryIds, email) => {
   return { status: httpStatusCode.CREATED, data: post };
 };
 
+const getAll = async () => {
+  const posts = await BlogPost.findAll({
+    include: [{
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    }, {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    }],
+  });
+  return { status: httpStatusCode.OK, data: posts };
+};
+
 module.exports = {
   create,
+  getAll,
 };
